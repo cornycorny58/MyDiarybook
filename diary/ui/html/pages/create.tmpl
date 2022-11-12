@@ -1,0 +1,35 @@
+{{define "title"}}Add a diary{{end}}
+{{define "main"}}
+<form action='/snippet/create' method='POST'>
+<!-- Include the CSRF token -->
+<input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+<div>
+<label>Heading:</label>
+{{with .Form.FieldErrors.title}}
+<label class='error'>{{.}}</label>
+{{end}}
+<input type='text' name='title' value='{{.Form.Title}}'>
+</div>
+<div>
+<label>Your caption:</label>
+{{with .Form.FieldErrors.content}}
+<label class='error'>{{.}}</label>
+{{end}}
+<textarea name='content'>{{.Form.Content}}</textarea>
+</div>
+<div>
+<label>Keep it:</label>
+{{with .Form.FieldErrors.expires}}
+<label class='error'>{{.}}</label>
+{{end}}
+<input type='radio' name='expires' value='10' {{if (eq .Form.Expires 1)}}checked{{end}}> 10 days
+<input type='radio' name='expires' value='30' {{if (eq .Form.Expires 1)}}checked{{end}}> 1 month
+<input type='radio' name='expires' value='365' {{if (eq .Form.Expires 7)}}checked{{end}}> 1 year
+<input type='radio' name='expires' value='3650' {{if (eq .Form.Expires 365)}}checked{{end}}> 10 years
+
+</div>
+<div>
+<input type='submit' value='Add a diary'>
+</div>
+</form>
+{{end}}
